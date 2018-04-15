@@ -2,11 +2,17 @@ package com.ivson.modelagemconceitual.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
- * SERIALIZABLE = os objetos podem ser convertidos em uma sequencia de BYTES, para arquivo, rede e etc
+ * SERIALIZABLE = os objetos podem ser convertidos em uma sequencia de BYTES, para arquivo, rede...
  * @author Santo
  *
  */
+@Entity
 public class Categoria implements Serializable {
 	
 	/**
@@ -14,6 +20,8 @@ public class Categoria implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)		
 	private Integer id;
 	private String nome;
 	
