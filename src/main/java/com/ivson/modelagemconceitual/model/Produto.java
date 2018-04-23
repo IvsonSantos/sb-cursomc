@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Produto implements Serializable {
 
@@ -33,6 +35,7 @@ public class Produto implements Serializable {
 	 * classe de referencia
 	 */
 	@ManyToMany
+	@JsonBackReference		// ja pega os dados do outro lado, nao precisa mais
 	@JoinTable(name = "produto_categoria", 
 			   joinColumns = @JoinColumn(name = "produto_id"),
 			   inverseJoinColumns = @JoinColumn(name = "categoria_id") 
