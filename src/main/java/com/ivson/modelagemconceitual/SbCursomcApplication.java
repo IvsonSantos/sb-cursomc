@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.ivson.modelagemconceitual.model.Categoria;
 import com.ivson.modelagemconceitual.model.Cidade;
+import com.ivson.modelagemconceitual.model.Cliente;
+import com.ivson.modelagemconceitual.model.Endereco;
 import com.ivson.modelagemconceitual.model.Estado;
 import com.ivson.modelagemconceitual.model.Produto;
+import com.ivson.modelagemconceitual.model.enuns.TipoCliente;
 import com.ivson.modelagemconceitual.repositories.CategoriaRepository;
 import com.ivson.modelagemconceitual.repositories.CidadeRepository;
+import com.ivson.modelagemconceitual.repositories.ClienteRepository;
+import com.ivson.modelagemconceitual.repositories.EnderecoRepository;
 import com.ivson.modelagemconceitual.repositories.EstadoRepository;
 import com.ivson.modelagemconceitual.repositories.ProdutoRepository;
 
@@ -27,6 +32,10 @@ public class SbCursomcApplication implements CommandLineRunner {
 	private EstadoRepository estadoRepository;
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	
 	public static void main(String[] args) {
@@ -68,5 +77,18 @@ public class SbCursomcApplication implements CommandLineRunner {
 
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
+	
+		
+		// cliente
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "009", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("123456","98764"));
+		
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "3333", cli1, c1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "4444", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));		
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2));
 	}
 }
