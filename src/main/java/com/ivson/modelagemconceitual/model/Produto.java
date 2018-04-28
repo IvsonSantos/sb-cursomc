@@ -2,7 +2,9 @@ package com.ivson.modelagemconceitual.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -29,6 +32,10 @@ public class Produto implements Serializable {
 	private String nome;
 	
 	private Double preco;
+	
+	// set nao pode ter item repetido
+	@OneToMany(mappedBy="id.produto")
+	private Set<ItemPedido> itens = new HashSet<>();
 	
 	/**
 	 * Nome da tabela que vai ficar no meio, nome do campo ID desta classe, nome do campo ID da
@@ -51,6 +58,15 @@ public class Produto implements Serializable {
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
+	}
+	
+	// para pegar todos os pedidos do produto
+	public List<Pedido> getPedidos() {
+		List<Pedido> lista = new ArrayList<>();
+		for (ItemPedido item : itens) {
+			lista.add(item.getPedido());			
+		}
+		return lista;
 	}
 
 	public Integer getId() {
@@ -108,6 +124,14 @@ public class Produto implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
 	}
 	
 	
