@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable {
@@ -35,6 +36,7 @@ public class Produto implements Serializable {
 	
 	// set nao pode ter item repetido
 	@OneToMany(mappedBy="id.produto")
+	@JsonIgnore
 	private Set<ItemPedido> itens = new HashSet<>();
 	
 	/**
@@ -61,6 +63,8 @@ public class Produto implements Serializable {
 	}
 	
 	// para pegar todos os pedidos do produto
+	// tudo que começar com GET automaticamente é serializado
+	@JsonIgnore
 	public List<Pedido> getPedidos() {
 		List<Pedido> lista = new ArrayList<>();
 		for (ItemPedido item : itens) {
