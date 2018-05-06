@@ -20,4 +20,15 @@ public class CategoriaService {
 		return categoria.orElseThrow(() -> 
 				new ObjectNotFoundException("Objeto nao encontrado: " + Categoria.class.getName()));
 	}
+	
+	/**
+	 * Metodo para inserir uma categoria
+	 * @param categoria
+	 * @return
+	 */
+	public Categoria insert(Categoria categoria) {
+		// tem que ter o ID nulo para salvar um novo 		
+		categoria.setId(null);
+		return repo.save(categoria);
+	}
 }
